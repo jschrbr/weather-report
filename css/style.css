@@ -1,0 +1,30 @@
+header,
+main,
+footer,
+.container,
+nav {
+  padding-left: 300px;
+}
+
+@media only screen and (max-width: 992px) {
+  header,
+  main,
+  footer,
+  .container,
+  nav {
+    padding-left: 0;
+  }
+}
+
+.flex-div {
+  display: flex;
+  justify-content: center;
+}
+
+.fill-space {
+  flex: 1 1 auto;
+}
+
+.float-right {
+  float: right;
+}
