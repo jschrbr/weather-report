@@ -13,7 +13,7 @@ function createItem(item) {
 function createTab(tab, id) {
   let tabBut = $("<a>")
     .text(tab)
-    .attr({ href: "#test" + id });
+    .attr({ href: "#forecast" + id });
   let tabLi = createEl("li").addClass("tab");
   if (id === 4) {
     tabBut.addClass("active");
@@ -56,7 +56,9 @@ async function getWeather(query) {
       currentWeatherEl.text("");
       currentWeatherEl.append(currentStats);
       $("#tabs").text("");
+      $("#forecast").text("");
       results.shift();
+      let forecastTabs = createEl("div");
 
       results.forEach((result, index) => {
         date = createEl("span").text(result.valid_date);
@@ -79,11 +81,12 @@ async function getWeather(query) {
           .add(1 + index, "days")
           .format("dddd");
 
-        $("#tabs").append(createTab(day, 4 + index));
-        $("#test" + (4 + index)).text("");
-        $("#test" + (4 + index)).append(date);
-        $("#test" + (4 + index)).append(weatherIcon);
-        $("#test" + (4 + index)).append(forecastStats);
+        $("#tabs").append(createTab(day, index));
+        let tab = createEl("div").attr({ id: "forecast" + index });
+        tab.append(date);
+        tab.append(weatherIcon);
+        tab.append(forecastStats);
+        $("#forecast").append(tab);
       });
     }
     $(".tabs").tabs();
@@ -107,9 +110,7 @@ function queryWeather(e) {
 $(document).ready(function() {
   let query = "melbourne,vic";
   $(".sidenav").sidenav();
-  getWeather(query).then(function() {
-    $("#forecast").show();
-  });
+  getWeather(query);
 });
 
 $("form").submit(queryWeather);
